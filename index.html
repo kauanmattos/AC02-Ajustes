@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+        *{
+            font-family: "Poppins", sans-serif;
+        }
+
+        h2{
+            text-align: center;
+            text-transform: uppercase;
+            color: #005fbf;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .input {
+            display: block;
+            margin: 15px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #008cff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background-color: #3d8afe;
+            transition: 0.4s;
+        }
+
+        .erro {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+
+        #mensagemErro {
+            color: red;
+            display: none;
+        }
+
+        .invalido {
+            border: 2px solid red;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>Formulário de Cadastro</h2>
+    </header>
+
+    <div class="container">
+        <form id="formCadastro">
+            <label class="form-label">Nome:</label>
+            <input type="text" id="nome" class="input">
+
+            <label class="form-label">Email:</label>
+            <input type="email" id="email" class="input">
+
+            <label class="form-label">Senha:</label>
+            <input type="password" id="senha" class="input">
+
+            <button type="button" id="btnEnviar" class="btn">Cadastrar</button>
+            <p id="mensagemErro">Preencha todos os campos corretamente.</p>
+        </form>
+
+        <section>
+            <h3>Usuários Cadastrados:</h3>
+            <ul id="listaUsuarios">
+                <!-- nomes aparecerão aqui -->
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        const btn = document.getElementById("btnEnviar");
+        const form = document.getElementById("formCadastro");
+        const nome = document.getElementById("nome");
+        const email = document.getElementById("email");
+        const senha = document.getElementById("senha");
+        const lista = document.getElementById("listaUsuarios");
+        const msg = document.getElementById("mensagemErro");
+
+        btn.addEventListener("click", function (evento) {
+            evento.preventDefault();
+
+            //Senha invalida
+            if (senha.value.length < 8) {
+                senha.classList.add("invalido");
+            } else {
+                senha.classList.remove("invalido")
+            }
+
+            if (
+                nome.value != "" &&
+                email.value.includes("@") &&
+                senha.value.length >= 8
+            ) {
+                let li = document.createElement("li");
+                li.innerText = nome.value + " - " + email.value;
+                lista.appendChild(li);
+
+                nome.value = "";
+                email.value = "";
+                senha.value = "";
+
+                msg.style.display = "none";
+            } else {
+                msg.style.display = "block"
+            }
+        });
+    </script>
+</body>
+
+</html>
